@@ -40,6 +40,6 @@
     "populate": "ts-node-dev populate.ts",
     "db-push": "npx prisma db push --preview-feature",
     "studio": "npx prisma studio",
-    "nexus-generate": "ts-node-dev --transpile-only src/schema"
+    "nexus-generate": "ts-node-dev --transpile-only src/graphql/schema"
   }
 }
