@@ -9,3 +9,26 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model User {
+  id       String @id @default(uuid()) @db.Uuid
+  email    String @unique
+  password String
+  name     String
+}
+
+/// Something you want to split the bill on.
+model Unit {
+  id     String @id @default(uuid()) @db.Uuid
+  name   String
+  price  Float
+  amount Int
+  // TODO: Handle unit of measure (assume cl as of now)
+
+}
+
+/// A collaborative session where bills are split.
+model Split {
+  id   String @id @default(uuid()) @db.Uuid
+  name String
+}
