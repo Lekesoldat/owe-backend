@@ -12,15 +12,17 @@
     "@types/connect-redis": "^0.0.16",
     "@types/cors": "^2.8.10",
     "@types/express-session": "^1.17.3",
+    "@types/faker": "^5.5.7",
     "@types/graphql-iso-date": "^3.4.0",
     "@types/node": "^15.0.2",
     "@types/redis": "^2.8.28",
-    "prisma": "^2.28.0",
+    "faker": "^5.5.3",
+    "prisma": "^2.29.0",
     "ts-node-dev": "^1.1.6",
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@prisma/client": "^2.28.0",
+    "@prisma/client": "^2.29.0",
     "apollo-server": "^2.24.0",
     "apollo-server-express": "^2.24.0",
     "bcryptjs": "^2.4.3",
@@ -37,7 +39,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev --transpile-only --no-notify src/server.ts",
-    "populate": "ts-node-dev populate.ts",
+    "populate": "ts-node-dev src/populate.ts",
     "db-push": "npx prisma db push",
     "studio": "npx prisma studio",
     "nexus-generate": "ts-node-dev --transpile-only src/graphql/schema"

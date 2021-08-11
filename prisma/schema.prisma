@@ -11,24 +11,29 @@ generator client {
 }
 
 model User {
-  id       String @id @default(uuid()) @db.Uuid
-  email    String @unique
+  id       String  @id @default(uuid()) @db.Uuid
+  email    String  @unique
   password String
   name     String
+  splits   Split[]
 }
 
 /// Something you want to split the bill on.
 model Unit {
-  id     String @id @default(uuid()) @db.Uuid
-  name   String
-  price  Float
-  amount Int
+  id      String  @id @default(uuid()) @db.Uuid
+  name    String
+  price   Float
+  amount  Int
   // TODO: Handle unit of measure (assume cl as of now)
-
+  Split   Split?  @relation(fields: [splitId], references: [id])
+  splitId String? @db.Uuid
 }
 
 /// A collaborative session where bills are split.
 model Split {
-  id   String @id @default(uuid()) @db.Uuid
-  name String
+  id     String  @id @default(uuid()) @db.Uuid
+  name   String
+  units  Unit[]
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.Uuid
 }

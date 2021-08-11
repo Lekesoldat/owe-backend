@@ -21,6 +21,5 @@ export const initialize = async (options?: GetMiddlewareOptions) => {
   });
 
   await server.start();
-
   return server.getMiddleware({ path: "/", ...options });
 };
