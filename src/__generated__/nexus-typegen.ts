@@ -6,8 +6,23 @@
 
 import { Context } from "./../graphql/context"
 import { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
-
-
+import { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    datetime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    datetime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -26,10 +41,29 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
+  AccessToken: { // root type
+    accessToken?: string | null; // String
+  }
   Query: {};
+  Split: { // root type
+    id?: string | null; // ID
+    name?: string | null; // String
+  }
+  Unit: { // root type
+    amount?: number | null; // Int
+    id?: string | null; // ID
+    name?: string | null; // String
+    price?: number | null; // Float
+  }
+  User: { // root type
+    email?: string | null; // String
+    id?: string | null; // ID
+    name?: string | null; // String
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -43,14 +77,58 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  AccessToken: { // field return type
+    accessToken: string | null; // String
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    allSplits: Array<NexusGenRootTypes['Split'] | null> | null; // [Split]
+    allUnits: Array<NexusGenRootTypes['Unit'] | null> | null; // [Unit]
+    allUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    me: NexusGenRootTypes['User'] | null; // User
+  }
+  Split: { // field return type
+    id: string | null; // ID
+    name: string | null; // String
+    units: Array<NexusGenRootTypes['Unit'] | null> | null; // [Unit]
+  }
+  Unit: { // field return type
+    amount: number | null; // Int
+    id: string | null; // ID
+    name: string | null; // String
+    price: number | null; // Float
+  }
+  User: { // field return type
+    email: string | null; // String
+    id: string | null; // ID
+    name: string | null; // String
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  AccessToken: { // field return type name
+    accessToken: 'String'
+  }
   Query: { // field return type name
-    ok: 'Boolean'
+    allSplits: 'Split'
+    allUnits: 'Unit'
+    allUsers: 'User'
+    me: 'User'
+  }
+  Split: { // field return type name
+    id: 'ID'
+    name: 'String'
+    units: 'Unit'
+  }
+  Unit: { // field return type name
+    amount: 'Int'
+    id: 'ID'
+    name: 'String'
+    price: 'Float'
+  }
+  User: { // field return type name
+    email: 'String'
+    id: 'ID'
+    name: 'String'
   }
 }
 
