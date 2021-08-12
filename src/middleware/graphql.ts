@@ -16,6 +16,7 @@ export const initialize = async (options?: GetMiddlewareOptions) => {
       prisma,
       pubsub,
       session: req.session,
+      userId: req.session.user?.id,
     }),
     tracing: true,
   });
