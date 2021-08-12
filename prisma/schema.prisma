@@ -18,6 +18,13 @@ model User {
   participations Participation[]
 }
 
+// A collaborative session where beverage cost is split
+model Split {
+  id           String          @id @default(uuid()) @db.Uuid
+  name         String
+  participants Participation[]
+}
+
 // A Users participation in a Split
 model Participation {
   id           String         @id @default(uuid()) @db.Uuid
@@ -31,13 +38,6 @@ model Participation {
   contribution Contribution[]
   // The total consumption
   consumption  Consumption[]
-}
-
-// A collaborative session where beverage cost is split
-model Split {
-  id           String          @id @default(uuid()) @db.Uuid
-  name         String
-  participants Participation[]
 }
 
 // A contribution to a Split
