@@ -11,27 +11,67 @@ generator client {
 }
 
 model User {
-  id       String @id @default(uuid()) @db.Uuid
-  email    String @unique
-  password String
-  name     String
+  id             String          @id @default(uuid()) @db.Uuid
+  name           String
+  email          String          @unique
+  password       String
+  participations Participation[]
 }
 
-/// Something you want to split the bill on.
-model Unit {
-  id      String  @id @default(uuid()) @db.Uuid
-  name    String
-  price   Float
-  amount  Int
-  // TODO: Handle unit of measure (assume cl as of now)
-  Split   Split?  @relation(fields: [splitId], references: [id])
-  splitId String? @db.Uuid
+// A Users participation in a Split
+model Participation {
+  id           String         @id @default(uuid()) @db.Uuid
+  // The User
+  user         User           @relation(fields: [userId], references: [id])
+  userId       String         @db.Uuid
+  // The Split
+  split        Split          @relation(fields: [splitId], references: [id])
+  splitId      String         @db.Uuid
+  // The contribution to the split
+  contribution Contribution[]
+  // The total consumption
+  consumption  Consumption[]
 }
 
-/// A collaborative session where bills are split.
+// A collaborative session where beverage cost is split
 model Split {
-  id    String @id @default(uuid()) @db.Uuid
-  name  String
-  units Unit[]
+  id           String          @id @default(uuid()) @db.Uuid
+  name         String
+  participants Participation[]
+}
 
+// A contribution to a Split
+model Contribution {
+  id            String        @id @default(uuid()) @db.Uuid
+  // The Participation
+  participation Participation @relation(fields: [participantId], references: [id])
+  participantId String        @db.Uuid
+  // The Unit
+  unit          Unit          @relation(fields: [unitId], references: [id])
+  unitId        String        @db.Uuid
+}
+
+// Consumption of a unit in a Split
+model Consumption {
+  id            String        @id @default(uuid()) @db.Uuid
+  // The Participation
+  Participant   Participation @relation(fields: [participantId], references: [id])
+  participantId String        @db.Uuid
+  // The Unit consumed
+  unit          Unit          @relation(fields: [unitId], references: [id])
+  unitId        String        @db.Uuid
+  // The amount consumed
+  volume        Int
+  // Price of consumption
+  price         Float
+}
+
+// Something you want to split the bill on.
+model Unit {
+  id           String        @id @default(uuid()) @db.Uuid
+  name         String
+  price        Float
+  amount       Int
+  contribution Contribution?
+  consumption  Consumption[]
 }
