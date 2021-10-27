@@ -10,9 +10,9 @@ export const Split = objectType({
 
     t.field("units", {
       type: list(Unit),
-      resolve: (parent, __, ctx) => {
+      resolve: async (parent, __, ctx) => {
         const { id } = parent as SplitModel;
-        return ctx.prisma.unit.findMany({
+        return await ctx.prisma.unit.findMany({
           where: { splitId: id },
         });
       },
